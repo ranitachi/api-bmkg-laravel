@@ -88,10 +88,10 @@ class Bmkg
         $bmkg   = $this->_data($url);
 
         // creator
-        $result['creator']['name']          = $this->_name;
-        $result['creator']['homepage']      = $this->_homepage;
-        $result['creator']['telegram']      = $this->_telegram;
-        $result['creator']['source_code']   = $this->_source_code;
+        // $result['creator']['name']          = $this->_name;
+        // $result['creator']['homepage']      = $this->_homepage;
+        // $result['creator']['telegram']      = $this->_telegram;
+        // $result['creator']['source_code']   = $this->_source_code;
 
         // BMKG
         $result['data_source']['institution']   = $this->_bmkg;
@@ -146,11 +146,11 @@ class Bmkg
 
         $bmkg   = $this->_data($url);
 
-        // creator
-        $result['creator']['name']          = $this->_name;
-        $result['creator']['homepage']      = $this->_homepage;
-        $result['creator']['telegram']      = $this->_telegram;
-        $result['creator']['source_code']   = $this->_source_code;
+        // // creator
+        // $result['creator']['name']          = $this->_name;
+        // $result['creator']['homepage']      = $this->_homepage;
+        // $result['creator']['telegram']      = $this->_telegram;
+        // $result['creator']['source_code']   = $this->_source_code;
 
         // BMKG
         $result['data_source']['institution']   = $this->_bmkg;

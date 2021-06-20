@@ -7,3 +7,4 @@ Sumber Data :
 
 Referensi :
 https://github.com/muhammadhanif/php-bmkg-gempa-geojson.git
+https://simplehtmldom.sourceforge.io

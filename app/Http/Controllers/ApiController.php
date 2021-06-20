@@ -8,6 +8,8 @@ use Storage;
 use App\Helpers\Bmkg;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use App\Helpers\SimpleHtmlDom;
+use App\Helpers\PerkiraanCuaca;
 use GuzzleHttp\Exception\GuzzleException;
 use Orchestra\Parser\Xml\Facade as XmlParser;
 
@@ -15,50 +17,29 @@ class ApiController extends Controller
 {
     function perkiraan_cuaca($daerah=null)
     {
+        $tables = $items = array();
         if($daerah!=null)
         {
-            $url = 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/DigitalForecast-'.$daerah.'.xml';
-            $guzzleClient = new Client();
-            $response = $guzzleClient->get($url);
-            $body = $response->getBody();
-            $body->seek(0);
-            $size = $body->getSize();
-            $file = $body->read($size);
-            // return $file;
-            // File::put(storage_path('app/public/'), $file.'txt');
-            Storage::disk('public')->put($daerah.'.txt', $body);
+            $perkiraan = new PerkiraanCuaca;
+            return $perkiraan->getDataPerkiraan($daerah);
+        }
+        else{
+            $dom = new SimpleHtmlDom;
+            $html = $dom->file_get_html('https://data.bmkg.go.id/prakiraan-cuaca/');
+            // return $html->find('tbody');
 
-            $get = simplexml_load_string(storage_path('app/public/'.$daerah.'.txt'));
-            // $get = json_decode(json_encode(simplexml_load_string(public_path('storage/'.$daerah.'.txt'))), TRUE);
+            foreach($html->find('tbody tr') as $table) {
+                $tables['id'] = $table->find('td', 0)->plaintext;
+                $tables['daerah'] = $table->find('td', 1)->plaintext;
 
-            return $get;
-            // Then you can do stuff with your file locally on your server
-            // $xml = $reader->load('STORAGE_PATH');
-            // $xml = XmlParser::load(storage_path('app/public/'.$daerah.'.txt'));
-            // $xml = XmlParser::load(public_path('storage/contoh.txt'));
-            // $user = $xml->parse([
-            //     'id' => ['uses' => 'user.id'],
-            //     'email' => ['uses' => 'user.email'],
-            //     'followers' => ['uses' => 'user::followers'],
-            // ]);
+                $url = $table->find('td pre a',0)->href;
+                $tables['url'] = str_replace('../','https://data.bmkg.go.id/',$url);
+                $tables['last_update'] = $table->find('td', 3)->plaintext;
+                array_push($items,$tables);
+            }
 
-            // $data = $xml->parse([
-            //     'domain' => ['uses' => 'forecast::domain'],
-            //     'timestamp' => ['uses' => 'forecast.issue.timestamp'],
-            //     'year' => ['uses' => 'forecast.issue.year'],
-            //     'month' => ['uses' => 'forecast.issue.month'],
-            //     'day' => ['uses' => 'forecast.issue.day'],
-            //     'hour' => ['uses' => 'forecast.issue.hour'],
-            //     'minute' => ['uses' => 'forecast.issue.minute'],
-            //     'second' => ['uses' => 'forecast.issue.second'],
-            //     'area_id' => ['uses' => 'forecast.area::id']
-            // ]);
-            // return $data;
-            // $xmlString = file_get_contents($url);
-            // $xmlObject = simplexml_load_string($xmlString);
-                       
-            // $json = json_encode($xmlObject);
-            // $phpArray = json_decode($json, true); 
+            // return $items;
+            return view('index-perkiraan')->with('items',$items);
         }
     }
     

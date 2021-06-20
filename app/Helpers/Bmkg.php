@@ -198,181 +198,181 @@ class Bmkg
 
         // return json_encode($result);
     }
-    // public function getGempaTerkini()
-    // {
-    //     $url    = 'https://data.bmkg.go.id/DataMKG/TEWS/autogempa.xml';
-    //     $data   = 'Gempa Bumi Terkini';
+    public function getGempaTerkiniGeoJson()
+    {
+        $url    = 'https://data.bmkg.go.id/DataMKG/TEWS/autogempa.xml';
+        $data   = 'Gempa Bumi Terkini';
 
-    //     $bmkg   = $this->_data($url);
+        $bmkg   = $this->_data($url);
 
-    //     // creator
-    //     // $result['creator']['name']          = $this->_name;
-    //     // $result['creator']['homepage']      = $this->_homepage;
-    //     // $result['creator']['telegram']      = $this->_telegram;
-    //     // $result['creator']['source_code']   = $this->_source_code;
+        // creator
+        // $result['creator']['name']          = $this->_name;
+        // $result['creator']['homepage']      = $this->_homepage;
+        // $result['creator']['telegram']      = $this->_telegram;
+        // $result['creator']['source_code']   = $this->_source_code;
 
-    //     // BMKG
-    //     $result['data_source']['institution']   = $this->_bmkg;
-    //     $result['data_source']['data']          = $data;
-    //     $result['data_source']['url']           = $url;
+        // BMKG
+        $result['data_source']['institution']   = $this->_bmkg;
+        $result['data_source']['data']          = $data;
+        $result['data_source']['url']           = $url;
 
-    //     // geojson
-    //     $result['type']     = 'FeatureCollection';
-    //     $result['features'] = array();
+        // geojson
+        $result['type']     = 'FeatureCollection';
+        $result['features'] = array();
 
-    //     if ($bmkg['success']) {
-    //         // success
-    //         $result['success'] = true;
+        if ($bmkg['success']) {
+            // success
+            $result['success'] = true;
 
-    //         // type
-    //         $result['features'][0]['type'] = 'Feature';
+            // type
+            $result['features'][0]['type'] = 'Feature';
 
-    //         //properties
-    //         $result['features'][0]['properties']['tanggal']     = $bmkg['data']['gempa']['Tanggal'];
-    //         $result['features'][0]['properties']['jam']         = $bmkg['data']['gempa']['Jam'];
-    //         $result['features'][0]['properties']['lintang']     = $bmkg['data']['gempa']['Lintang'];
-    //         $result['features'][0]['properties']['bujur']       = $bmkg['data']['gempa']['Bujur'];
-    //         $result['features'][0]['properties']['magnitude']   = $bmkg['data']['gempa']['Magnitude'];
-    //         $result['features'][0]['properties']['kedalaman']   = $bmkg['data']['gempa']['Kedalaman'];
-    //         $result['features'][0]['properties']['wilayah']     = $bmkg['data']['gempa']['Wilayah'];
-    //         $result['features'][0]['properties']['potensi']     = $bmkg['data']['gempa']['Potensi'];
-    //         $result['features'][0]['properties']['shakemap']     = "https://data.bmkg.go.id/DataMKG/TEWS/" . $bmkg['data']['gempa']['Shakemap'];
+            //properties
+            $result['features'][0]['properties']['tanggal']     = $bmkg['data']['gempa']['Tanggal'];
+            $result['features'][0]['properties']['jam']         = $bmkg['data']['gempa']['Jam'];
+            $result['features'][0]['properties']['lintang']     = $bmkg['data']['gempa']['Lintang'];
+            $result['features'][0]['properties']['bujur']       = $bmkg['data']['gempa']['Bujur'];
+            $result['features'][0]['properties']['magnitude']   = $bmkg['data']['gempa']['Magnitude'];
+            $result['features'][0]['properties']['kedalaman']   = $bmkg['data']['gempa']['Kedalaman'];
+            $result['features'][0]['properties']['wilayah']     = $bmkg['data']['gempa']['Wilayah'];
+            $result['features'][0]['properties']['potensi']     = $bmkg['data']['gempa']['Potensi'];
+            $result['features'][0]['properties']['shakemap']     = "https://data.bmkg.go.id/DataMKG/TEWS/" . $bmkg['data']['gempa']['Shakemap'];
 
-    //         // geometry
-    //         $coordinates = explode(',', $bmkg['data']['gempa']['point']['coordinates']);
+            // geometry
+            $coordinates = explode(',', $bmkg['data']['gempa']['point']['coordinates']);
 
-    //         $result['features'][0]['geometry']['type']          = 'Point';
-    //         $result['features'][0]['geometry']['coordinates']   = [floatval($coordinates[1]), floatval($coordinates[0])];
-    //     } else {
-    //         $result['success'] = false;
-    //     }
+            $result['features'][0]['geometry']['type']          = 'Point';
+            $result['features'][0]['geometry']['coordinates']   = [floatval($coordinates[1]), floatval($coordinates[0])];
+        } else {
+            $result['success'] = false;
+        }
 
-    //     // header
-    //     header('HTTP/1.1 200 OK');
-    //     header('Content-Type: application/json');
+        // header
+        header('HTTP/1.1 200 OK');
+        header('Content-Type: application/json');
 
-    //     return json_encode($result);
-    // }
+        return json_encode($result);
+    }
 
-    // public function getGempaM5()
-    // {
-    //     $url    = 'https://data.bmkg.go.id/DataMKG/TEWS/gempaterkini.xml';
-    //     $data   = 'Daftar 15 Gempa Bumi M 5.0+';
+    public function getGempaM5GeoJson()
+    {
+        $url    = 'https://data.bmkg.go.id/DataMKG/TEWS/gempaterkini.xml';
+        $data   = 'Daftar 15 Gempa Bumi M 5.0+';
 
-    //     $bmkg   = $this->_data($url);
+        $bmkg   = $this->_data($url);
 
-    //     // creator
-    //     // $result['creator']['name']          = $this->_name;
-    //     // $result['creator']['homepage']      = $this->_homepage;
-    //     // $result['creator']['telegram']      = $this->_telegram;
-    //     // $result['creator']['source_code']   = $this->_source_code;
+        // creator
+        // $result['creator']['name']          = $this->_name;
+        // $result['creator']['homepage']      = $this->_homepage;
+        // $result['creator']['telegram']      = $this->_telegram;
+        // $result['creator']['source_code']   = $this->_source_code;
 
-    //     // BMKG
-    //     $result['data_source']['institution']   = $this->_bmkg;
-    //     $result['data_source']['data']          = $data;
-    //     $result['data_source']['url']           = $url;
+        // BMKG
+        $result['data_source']['institution']   = $this->_bmkg;
+        $result['data_source']['data']          = $data;
+        $result['data_source']['url']           = $url;
 
-    //     // geojson
-    //     $result['type']     = 'FeatureCollection';
-    //     $result['features'] = array();
+        // geojson
+        $result['type']     = 'FeatureCollection';
+        $result['features'] = array();
 
-    //     if ($bmkg['success']) {
-    //         // success
-    //         $result['success'] = true;
+        if ($bmkg['success']) {
+            // success
+            $result['success'] = true;
 
-    //         for ($i = 0; $i < count($bmkg['data']['gempa']); $i++) {
-    //             // type
-    //             $gempa['type'] = 'Feature';
+            for ($i = 0; $i < count($bmkg['data']['gempa']); $i++) {
+                // type
+                $gempa['type'] = 'Feature';
 
-    //             //properties
-    //             $gempa['properties']['tanggal']     = $bmkg['data']['gempa'][$i]['Tanggal'];
-    //             $gempa['properties']['jam']         = $bmkg['data']['gempa'][$i]['Jam'];
-    //             $gempa['properties']['lintang']     = $bmkg['data']['gempa'][$i]['Lintang'];
-    //             $gempa['properties']['bujur']       = $bmkg['data']['gempa'][$i]['Bujur'];
-    //             $gempa['properties']['magnitude']   = $bmkg['data']['gempa'][$i]['Magnitude'];
-    //             $gempa['properties']['kedalaman']   = $bmkg['data']['gempa'][$i]['Kedalaman'];
-    //             $gempa['properties']['wilayah']     = $bmkg['data']['gempa'][$i]['Wilayah'];
+                //properties
+                $gempa['properties']['tanggal']     = $bmkg['data']['gempa'][$i]['Tanggal'];
+                $gempa['properties']['jam']         = $bmkg['data']['gempa'][$i]['Jam'];
+                $gempa['properties']['lintang']     = $bmkg['data']['gempa'][$i]['Lintang'];
+                $gempa['properties']['bujur']       = $bmkg['data']['gempa'][$i]['Bujur'];
+                $gempa['properties']['magnitude']   = $bmkg['data']['gempa'][$i]['Magnitude'];
+                $gempa['properties']['kedalaman']   = $bmkg['data']['gempa'][$i]['Kedalaman'];
+                $gempa['properties']['wilayah']     = $bmkg['data']['gempa'][$i]['Wilayah'];
 
-    //             // geometry
-    //             $coordinates = explode(',', $bmkg['data']['gempa'][$i]['point']['coordinates']);
+                // geometry
+                $coordinates = explode(',', $bmkg['data']['gempa'][$i]['point']['coordinates']);
 
-    //             $gempa['geometry']['type']          = 'Point';
-    //             $gempa['geometry']['coordinates']   = [floatval($coordinates[1]), floatval($coordinates[0])];
+                $gempa['geometry']['type']          = 'Point';
+                $gempa['geometry']['coordinates']   = [floatval($coordinates[1]), floatval($coordinates[0])];
 
-    //             // tambahkan ke array $result['features']
-    //             array_push($result['features'], $gempa);
-    //         }
-    //     } else {
-    //         $result['success'] = false;
-    //     }
+                // tambahkan ke array $result['features']
+                array_push($result['features'], $gempa);
+            }
+        } else {
+            $result['success'] = false;
+        }
 
-    //     // header
-    //     header('HTTP/1.1 200 OK');
-    //     header('Content-Type: application/json');
+        // header
+        header('HTTP/1.1 200 OK');
+        header('Content-Type: application/json');
 
-    //     return json_encode($result);
-    // }
+        return json_encode($result);
+    }
 
-    // public function getGempaDirasakan()
-    // {
-    //     $url    = 'https://data.bmkg.go.id/DataMKG/TEWS/gempadirasakan.xml';
-    //     $data   = 'Daftar 15 Gempa Bumi Dirasakan';
+    public function getGempaDirasakanGeoJson()
+    {
+        $url    = 'https://data.bmkg.go.id/DataMKG/TEWS/gempadirasakan.xml';
+        $data   = 'Daftar 15 Gempa Bumi Dirasakan';
 
-    //     $bmkg   = $this->_data($url);
+        $bmkg   = $this->_data($url);
 
-    //     // // creator
-    //     // $result['creator']['name']          = $this->_name;
-    //     // $result['creator']['homepage']      = $this->_homepage;
-    //     // $result['creator']['telegram']      = $this->_telegram;
-    //     // $result['creator']['source_code']   = $this->_source_code;
+        // // creator
+        // $result['creator']['name']          = $this->_name;
+        // $result['creator']['homepage']      = $this->_homepage;
+        // $result['creator']['telegram']      = $this->_telegram;
+        // $result['creator']['source_code']   = $this->_source_code;
 
-    //     // BMKG
-    //     $result['data_source']['institution']   = $this->_bmkg;
-    //     $result['data_source']['data']          = $data;
-    //     $result['data_source']['url']           = $url;
+        // BMKG
+        $result['data_source']['institution']   = $this->_bmkg;
+        $result['data_source']['data']          = $data;
+        $result['data_source']['url']           = $url;
 
-    //     // geojson
-    //     $result['type']     = 'FeatureCollection';
-    //     $result['features'] = array();
+        // geojson
+        $result['type']     = 'FeatureCollection';
+        $result['features'] = array();
 
-    //     if ($bmkg['success']) {
-    //         // success
-    //         $result['success'] = true;
+        if ($bmkg['success']) {
+            // success
+            $result['success'] = true;
 
-    //         for ($i = 0; $i < count($bmkg['data']['gempa']); $i++) {
-    //             // type
-    //             $gempa['type'] = 'Feature';
+            for ($i = 0; $i < count($bmkg['data']['gempa']); $i++) {
+                // type
+                $gempa['type'] = 'Feature';
 
-    //             //properties
-    //             $gempa['properties']['tanggal']     = $bmkg['data']['gempa'][$i]['Tanggal'];
-    //             $gempa['properties']['jam']         = $bmkg['data']['gempa'][$i]['Jam'];
-    //             $gempa['properties']['lintang']     = $bmkg['data']['gempa'][$i]['Lintang'];
-    //             $gempa['properties']['bujur']       = $bmkg['data']['gempa'][$i]['Bujur'];
-    //             $gempa['properties']['magnitude']   = $bmkg['data']['gempa'][$i]['Magnitude'];
-    //             $gempa['properties']['kedalaman']   = $bmkg['data']['gempa'][$i]['Kedalaman'];
-    //             $gempa['properties']['dirasakan']   = $bmkg['data']['gempa'][$i]['Dirasakan'];
-    //             $gempa['properties']['wilayah']   = $bmkg['data']['gempa'][$i]['Wilayah'];
+                //properties
+                $gempa['properties']['tanggal']     = $bmkg['data']['gempa'][$i]['Tanggal'];
+                $gempa['properties']['jam']         = $bmkg['data']['gempa'][$i]['Jam'];
+                $gempa['properties']['lintang']     = $bmkg['data']['gempa'][$i]['Lintang'];
+                $gempa['properties']['bujur']       = $bmkg['data']['gempa'][$i]['Bujur'];
+                $gempa['properties']['magnitude']   = $bmkg['data']['gempa'][$i]['Magnitude'];
+                $gempa['properties']['kedalaman']   = $bmkg['data']['gempa'][$i]['Kedalaman'];
+                $gempa['properties']['dirasakan']   = $bmkg['data']['gempa'][$i]['Dirasakan'];
+                $gempa['properties']['wilayah']   = $bmkg['data']['gempa'][$i]['Wilayah'];
 
-    //             // geometry
-    //             $coordinates = explode(',', $bmkg['data']['gempa'][$i]['point']['coordinates']);
+                // geometry
+                $coordinates = explode(',', $bmkg['data']['gempa'][$i]['point']['coordinates']);
 
-    //             $gempa['geometry']['type']          = 'Point';
-    //             $gempa['geometry']['coordinates']   = [floatval($coordinates[1]), floatval($coordinates[0])];
+                $gempa['geometry']['type']          = 'Point';
+                $gempa['geometry']['coordinates']   = [floatval($coordinates[1]), floatval($coordinates[0])];
 
-    //             // tambahkan ke array $result['features']
-    //             array_push($result['features'], $gempa);
-    //         }
-    //     } else {
-    //         $result['success'] = false;
-    //     }
+                // tambahkan ke array $result['features']
+                array_push($result['features'], $gempa);
+            }
+        } else {
+            $result['success'] = false;
+        }
 
 
-    //     // header
-    //     header('HTTP/1.1 200 OK');
-    //     header('Content-Type: application/json');
+        // header
+        header('HTTP/1.1 200 OK');
+        header('Content-Type: application/json');
 
-    //     return json_encode($result);
-    // }
+        return json_encode($result);
+    }
 
     private function _curl($url)
     {

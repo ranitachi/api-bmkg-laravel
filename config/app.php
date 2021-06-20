@@ -228,6 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'XmlParser' => Orchestra\Parser\Xml\Facade::class,
+        'SimpleHtmlDom' => App\Helpers\SimpleHtmlDom::class,
     ],
 
 ];

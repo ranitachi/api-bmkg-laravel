@@ -18,4 +18,9 @@ Route::get('/', function () {
 });
 
 Route::get('perkiraan-cuaca/{daerah?}','ApiController@perkiraan_cuaca');
+
 Route::get('gempa/{jenis?}','ApiController@gempa');
+
+Route::get('getGempaTerkiniGeoJson','ApiController@getGempaTerkiniGeoJson');
+Route::get('getGempaM5GeoJson','ApiController@getGempaM5GeoJson');
+Route::get('getGempaDirasakanGeoJson','ApiController@getGempaDirasakanGeoJson');

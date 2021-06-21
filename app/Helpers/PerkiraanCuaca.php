@@ -61,9 +61,9 @@ class PerkiraanCuaca
                         $id = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['@attributes']['id'];
                         $type = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['@attributes']['type'];
     
-                        $result['data'][$i]['parameter'][$j][$id] = $id;
-                        $result['data'][$i]['parameter'][$j][$jenis] = $jenis;
-                        $result['data'][$i]['parameter'][$j][$type] = $type;
+                        $result['data'][$i]['parameter'][$j]['id'] = $id;
+                        $result['data'][$i]['parameter'][$j]['jenis'] = $jenis;
+                        $result['data'][$i]['parameter'][$j]['type'] = $type;
     
                         for ($x = 0; $x < count($bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange']); $x++) {
     

@@ -23,13 +23,14 @@ class PerkiraanCuaca
         // bmkg
         $this->_bmkg           = "BMKG (Badan Meteorologi, Klimatologi, dan Geofisika)";
     }
-    public function getDataPerkiraan($daerah)
+    public function getDataPerkiraan($daerah,$kota=null)
     {
+
         $url    = 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/DigitalForecast-'.$daerah.'.xml';
         $data   = 'Perkiraan Cuaca Daerah '.$daerah;
 
         $bmkg   = $this->_data($url);
-
+        $namadaerah=array();
         // return $bmkg;
         // BMKG
         $result['data_source']['institution']   = $this->_bmkg;
@@ -49,44 +50,97 @@ class PerkiraanCuaca
 
             // $result['data'] = array();
             for ($i = 0; $i < count($bmkg['data']['forecast']['area']); $i++) {
-                $result['data'][$i]['nama_daerah'] = $bmkg['data']['forecast']['area'][$i]['name'][0];
-                $result['data'][$i]['koordinat']['latitude'] = $bmkg['data']['forecast']['area'][$i]['@attributes']['latitude'];
-                $result['data'][$i]['koordinat']['longitude'] = $bmkg['data']['forecast']['area'][$i]['@attributes']['longitude'];
-
-
-                if(isset($bmkg['data']['forecast']['area'][$i]['parameter']))
+                $namadaerah[] = $bmkg['data']['forecast']['area'][$i]['name'][0];
+            }
+            for ($i = 0; $i < count($bmkg['data']['forecast']['area']); $i++) {
+                if($kota!=null)
                 {
-                    for ($j = 0; $j < count($bmkg['data']['forecast']['area'][$i]['parameter']); $j++) {
-                        $jenis = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['@attributes']['description'];
-                        $id = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['@attributes']['id'];
-                        $type = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['@attributes']['type'];
-    
-                        $result['data'][$i]['parameter'][$j]['id'] = $id;
-                        $result['data'][$i]['parameter'][$j]['jenis'] = $jenis;
-                        $result['data'][$i]['parameter'][$j]['type'] = $type;
-    
-                        for ($x = 0; $x < count($bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange']); $x++) {
-    
-                            $waktu = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange'][$x]['@attributes']['datetime'];
-                            $result['data'][$i]['parameter'][$j]['nilai'][$x]['waktu'] = date('d-m-Y H:i:s',strtotime($waktu));
-    
-                            // var_dump($bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange'][$x]['value']);
-                            
-                                for ($y = 0; $y < count($bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange'][$x]); $y++) {
+                    if($bmkg['data']['forecast']['area'][$i]['name'][0] == $kota)
+                    {
+                        $result['data'][0]['nama_daerah'] = $bmkg['data']['forecast']['area'][$i]['name'][0];
+                        $result['data'][0]['koordinat']['latitude'] = $bmkg['data']['forecast']['area'][$i]['@attributes']['latitude'];
+                        $result['data'][0]['koordinat']['longitude'] = $bmkg['data']['forecast']['area'][$i]['@attributes']['longitude'];
+        
+        
+                        if(isset($bmkg['data']['forecast']['area'][0]['parameter']))
+                        {
+                            for ($j = 0; $j < count($bmkg['data']['forecast']['area'][0]['parameter']); $j++) {
+                                $jenis = $bmkg['data']['forecast']['area'][0]['parameter'][$j]['@attributes']['description'];
+                                $id = $bmkg['data']['forecast']['area'][0]['parameter'][$j]['@attributes']['id'];
+                                $type = $bmkg['data']['forecast']['area'][0]['parameter'][$j]['@attributes']['type'];
+            
+                                $result['data'][0]['parameter'][$j]['id'] = $id;
+                                $result['data'][0]['parameter'][$j]['jenis'] = $jenis;
+                                $result['data'][0]['parameter'][$j]['type'] = $type;
+            
+                                for ($x = 0; $x < count($bmkg['data']['forecast']['area'][0]['parameter'][$j]['timerange']); $x++) {
+            
+                                    $waktu = $bmkg['data']['forecast']['area'][0]['parameter'][$j]['timerange'][$x]['@attributes']['datetime'];
+                                    $result['data'][0]['parameter'][$j]['nilai'][$x]['waktu'] = date('d-m-Y H:i:s',strtotime($waktu));
+            
+                                    // var_dump($bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange'][$x]['value']);
                                     
-                                    $value = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange'][$x]['value'];
-    
-                                    $result['data'][$i]['parameter'][$j]['nilai'][$x]['value'] = $value;
+                                        for ($y = 0; $y < count($bmkg['data']['forecast']['area'][0]['parameter'][$j]['timerange'][$x]); $y++) {
+                                            
+                                            $value = $bmkg['data']['forecast']['area'][0]['parameter'][$j]['timerange'][$x]['value'];
+            
+                                            $result['data'][0]['parameter'][$j]['nilai'][$x]['value'] = $value;
+                                        }
+                                    
+                                    // $satuan = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange'][$x]['value']['@attributes']['unit'];
+            
+                                    // $result['data'][$i]['parameter'][$j]['nilai'][$x]['satuan'] = $satuan;
                                 }
-                            
-                            // $satuan = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange'][$x]['value']['@attributes']['unit'];
-    
-                            // $result['data'][$i]['parameter'][$j]['nilai'][$x]['satuan'] = $satuan;
+            
+                                // array_push($result['data']['parameter'],$parameter);
+                            }
                         }
     
-                        // array_push($result['data']['parameter'],$parameter);
+                        break;
                     }
+                }
+                else
+                {
 
+                    $result['data'][$i]['nama_daerah'] = $bmkg['data']['forecast']['area'][$i]['name'][0];
+                    $result['data'][$i]['koordinat']['latitude'] = $bmkg['data']['forecast']['area'][$i]['@attributes']['latitude'];
+                    $result['data'][$i]['koordinat']['longitude'] = $bmkg['data']['forecast']['area'][$i]['@attributes']['longitude'];
+    
+    
+                    if(isset($bmkg['data']['forecast']['area'][$i]['parameter']))
+                    {
+                        for ($j = 0; $j < count($bmkg['data']['forecast']['area'][$i]['parameter']); $j++) {
+                            $jenis = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['@attributes']['description'];
+                            $id = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['@attributes']['id'];
+                            $type = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['@attributes']['type'];
+        
+                            $result['data'][$i]['parameter'][$j]['id'] = $id;
+                            $result['data'][$i]['parameter'][$j]['jenis'] = $jenis;
+                            $result['data'][$i]['parameter'][$j]['type'] = $type;
+        
+                            for ($x = 0; $x < count($bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange']); $x++) {
+        
+                                $waktu = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange'][$x]['@attributes']['datetime'];
+                                $result['data'][$i]['parameter'][$j]['nilai'][$x]['waktu'] = date('d-m-Y H:i:s',strtotime($waktu));
+        
+                                // var_dump($bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange'][$x]['value']);
+                                
+                                    for ($y = 0; $y < count($bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange'][$x]); $y++) {
+                                        
+                                        $value = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange'][$x]['value'];
+        
+                                        $result['data'][$i]['parameter'][$j]['nilai'][$x]['value'] = $value;
+                                    }
+                                
+                                // $satuan = $bmkg['data']['forecast']['area'][$i]['parameter'][$j]['timerange'][$x]['value']['@attributes']['unit'];
+        
+                                // $result['data'][$i]['parameter'][$j]['nilai'][$x]['satuan'] = $satuan;
+                            }
+        
+                            // array_push($result['data']['parameter'],$parameter);
+                        }
+    
+                    }
                 }
 
                 // array_push($result['data'], $cuaca);
@@ -94,7 +148,7 @@ class PerkiraanCuaca
         } else {
             $result['success'] = false;
         }
-
+        $result['nama_daerah'] = $namadaerah;
         // header
         // header('HTTP/1.1 200 OK');
         // header('Content-Type: application/json');

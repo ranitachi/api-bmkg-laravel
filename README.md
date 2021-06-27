@@ -8,3 +8,6 @@ Sumber Data :
 Referensi :
 https://github.com/muhammadhanif/php-bmkg-gempa-geojson.git
 https://simplehtmldom.sourceforge.io
+
+Design Wigdet by :
+https://github.com/JonUK/responsive-web-weather-app

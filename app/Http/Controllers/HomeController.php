@@ -30,8 +30,8 @@ class HomeController extends Controller
         // return $data;
 
         $alldaerah = $data['nama_daerah'];
-        $tgl = $data['issue']['year'].'-'.$data['issue']['month'].'-'.$data['issue']['day'];
-        $wkt = $data['issue']['hour'].':'.$data['issue']['minute'].':'.$data['issue']['second'];
+        $tgll = $data['issue']['year'].'-'.$data['issue']['month'].'-'.$data['issue']['day'];
+        $wktt = $data['issue']['hour'].':'.$data['issue']['minute'].':'.$data['issue']['second'];
         // return $data;
         $suhu = $tmin = $tmax = $wd = array();
         $parameter = $data['data'][0]['parameter'];
@@ -109,9 +109,9 @@ class HomeController extends Controller
                 ->with('tmin',$tmin)
                 ->with('tmax',$tmax)
                 ->with('alldaerah',$alldaerah)
-                ->with('tgl',$tgl)
+                ->with('tgl',$tgll)
                 ->with('suhu',$suhu)
-                ->with('wkt',$wkt)
+                ->with('wkt',$wktt)
                 ->with('kota',$kota)
                 ->with('data',$data);
     }

@@ -22,10 +22,12 @@ Route::get('perkiraan-cuaca/{daerah?}','ApiController@perkiraan_cuaca');
 
 Route::get('gempa/{jenis?}','ApiController@gempa');
 
+
 Route::get('getGempaTerkiniGeoJson','ApiController@getGempaTerkiniGeoJson');
 Route::get('getGempaM5GeoJson','ApiController@getGempaM5GeoJson');
 Route::get('getGempaDirasakanGeoJson','ApiController@getGempaDirasakanGeoJson');
 
+Route::get('table-gempa-m5','HomeController@table_gempa_m5');
 Route::get('wigdet/{daerah?}/{kota?}','HomeController@wigdet');
 
 // Route::get('coba-mqtt',function(){

@@ -108,14 +108,20 @@ class Bmkg
                 // type
 
                 //properties
-                $gempa['tanggal']     = $bmkg['data']['gempa'][$i]['Tanggal'];
-                $gempa['jam']         = $bmkg['data']['gempa'][$i]['Jam'];
-                $gempa['lintang']     = $bmkg['data']['gempa'][$i]['Lintang'];
-                $gempa['bujur']       = $bmkg['data']['gempa'][$i]['Bujur'];
-                $gempa['magnitude']   = $bmkg['data']['gempa'][$i]['Magnitude'];
-                $gempa['kedalaman']   = $bmkg['data']['gempa'][$i]['Kedalaman'];
-                $gempa['wilayah']     = $bmkg['data']['gempa'][$i]['Wilayah'];
-
+                //$gempa['tanggal']     = $bmkg['data']['gempa'][$i]['Tanggal'];
+//                 $gempa['jam']         = $bmkg['data']['gempa'][$i]['Jam'];
+//                 $gempa['lintang']     = $bmkg['data']['gempa'][$i]['Lintang'];
+//                 $gempa['bujur']       = $bmkg['data']['gempa'][$i]['Bujur'];
+//                 $gempa['magnitude']   = $bmkg['data']['gempa'][$i]['Magnitude'];
+//                 $gempa['kedalaman']   = $bmkg['data']['gempa'][$i]['Kedalaman'];
+//                 $gempa['wilayah']     = $bmkg['data']['gempa'][$i]['Wilayah'];
+$gempa['"tanggal"']     = $bmkg['data']['gempa'][$i]['Tanggal'];
+                $gempa['"jam"']         = $bmkg['data']['gempa'][$i]['Jam'];
+                $gempa['"lintang"']     = $bmkg['data']['gempa'][$i]['Lintang'];
+                $gempa['"bujur"']       = $bmkg['data']['gempa'][$i]['Bujur'];
+                $gempa['"magnitude"']   = $bmkg['data']['gempa'][$i]['Magnitude'];
+                $gempa['"kedalaman"']   = $bmkg['data']['gempa'][$i]['Kedalaman'];
+                $gempa['"wilayah"']     = $bmkg['data']['gempa'][$i]['Wilayah'];
                 // geometry
                 $coordinates = explode(',', $bmkg['data']['gempa'][$i]['point']['coordinates']);
 

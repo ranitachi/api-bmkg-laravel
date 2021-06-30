@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Weather App</title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
+
   <link href="{{ asset('css') }}/site.css" rel="stylesheet">
 </head>
 <body>
@@ -12,27 +13,48 @@
 <main class="main-container">
 
   <div class="location-and-date">
-    <h1 class="location-and-date__location">{{ $daerah }}</h1>
-    <div>Update : {{ \App\Helpers\DateHelper::hari(date('D',strtotime($tgl))) }}, {{ date('d/m/Y',strtotime($tgl)) }} {{ $wkt }} WIB</div>
+    <div style="width:100%;float:left">
+      <div style="width:50%;float:left">
+        <h1 class="location-and-date__location" style="font-size:20px;">
+          {{ $daerah }}
+        </h1>
+      </div>
+      <div style="width:50%;float:left">
+        <h1 class="location-and-date__location" style="font-size:20px;">
+          
+          <select name="nama_kota" onchange="ubah(this.value)" class="form-control" style="height:35px;padding:5px 10px;width:200px;">
+            @foreach ($alldaerah as $item)
+                @if($item == $kota)
+                  <option value="{{ $kota }}" selected="selected">{{ $kota }}</option>
+                @else
+                  <option value="{{ $item }}">{{ $item }}</option>
+                @endif
+            @endforeach
+          </select>
+        </h1>
+      </div>
+      <div style="font-size:12px;">Last Update : {{ \App\Helpers\DateHelper::hari(date('D',strtotime($tgl))) }}, {{ date('d/m/Y',strtotime($tgl)) }} {{ $wkt }} WIB</div>
+        <div class="current-temperature">
+          <div class="current-temperature__icon-container">
+            <img src="{{ asset('svg') }}/mostly-sunny.svg" class="current-temperature__icon" alt="">
+          </div>
+          <div class="current-temperature__content-container">
+            <div class="current-temperature__value">{{ isset($suhu[key($suhu)]) ? $suhu[key($suhu)] : '-' }}&deg;</div>
+            <div class="current-temperature__summary">Mostly Sunny</div>
+          </div>
+        </div>
+      </div>
   </div>
 
 
-  <div class="current-temperature">
-    <div class="current-temperature__icon-container">
-      <img src="{{ asset('svg') }}/mostly-sunny.svg" class="current-temperature__icon" alt="">
-    </div>
-    <div class="current-temperature__content-container">
-      <div class="current-temperature__value">21&deg;</div>
-      <div class="current-temperature__summary">Mostly Sunny</div>
-    </div>
-  </div>
+  
 
 
   <div class="current-stats">
     <div>
-      <div class="current-stats__value">23&deg;</div>
+      <div class="current-stats__value">{{ isset($tmax[key($tmax)]) ? $tmax[key($tmax)] : '' }}&deg;</div>
       <div class="current-stats__label">High</div>
-      <div class="current-stats__value">14&deg;</div>
+      <div class="current-stats__value">{{ isset($tmin[key($tmin)]) ? $tmin[key($tmin)] : '' }}&deg;</div>
       <div class="current-stats__label">Low</div>
     </div>
     <div>
@@ -262,4 +284,10 @@
 </main>
 
 </body>
+<script>
+  function ubah(val)
+  {
+    location.href="{{ url('wigdet') }}/{{ $daerah }}/"+val
+  }
+</script>
 </html>

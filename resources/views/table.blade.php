@@ -6,8 +6,8 @@
 </head>
 <body>
     <center>
-        <h1>Daftar 15 Gempa Bumi M 5.0+</h1>
-        <h4>BMKG (Badan Meteorologi, Klimatologi, dan Geofisika)</h4>
+        <h1 style="margin:0px !important;padding:5px 0px !important;">Daftar 15 Gempa Bumi M 5.0+</h1>
+        <h4 style="margin:0px !important;padding:5px 0px !important;">BMKG (Badan Meteorologi, Klimatologi, dan Geofisika)</h4>
         <table class="table1">
             <tr>
                 <th>No</th>
@@ -24,7 +24,7 @@
                 <td class="text-center">
                     <!-- $item['latitude'] -->
                     <!-- $item['longitude'] -->
-                    <a href="http://maps.google.com/maps?q={{ $item['latitude'] }},{{ $item['longitude'] }}&zoom=4" target="_blank"><img src="{{ asset('img/maps.png') }}" style="height: 40px;"></a>
+                    <a href="http://maps.google.com/maps?q={{ $item['latitude'] }},{{ $item['longitude'] }}&zoom=4" target="_blank"><img src="{{ asset('img/maps.png') }}" style="height: 20px;"></a>
                 </td>
                 <td class="text-center">{{ $item['magnitude'] }} SR</td>
                 <td class="text-center">{{ $item['kedalaman'] }}</td>

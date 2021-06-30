@@ -103,7 +103,7 @@ class HomeController extends Controller
             //     }
             // }
         }
-        return $suhu;
+        // return $suhu;
         return view('wigdet')
                 ->with('daerah',$daerah)
                 ->with('tmin',$tmin)

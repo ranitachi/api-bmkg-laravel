@@ -13,7 +13,7 @@ class HomeController extends Controller
         if($daerah==null)
             $daerah = 'JawaBarat';
 
-        $bmkg = new PerkiraanCuaca; 
+        $bmkg = new PerkiraanCuaca;
 
         if($kota==null)
         {
@@ -50,13 +50,13 @@ class HomeController extends Controller
                         {
 
                             if($item['id']=='tmin')
-                                $tmin[$tgl] = $val['value'][0]; 
+                                $tmin[$tgl] = $val['value'][0];
 
                             if($item['id']=='tmax')
-                                $tmax[$tgl] = $val['value'][0]; 
-                            
+                                $tmax[$tgl] = $val['value'][0];
+
                             if($item['id']=='wd')
-                                $tmax[$tgl] = $val['value'][0]; 
+                                $tmax[$tgl] = $val['value'][0];
 
                             if($item['id'] == 't')
                             {
@@ -103,7 +103,7 @@ class HomeController extends Controller
             //     }
             // }
         }
-        // return $suhu;
+        // return $data['data'][0]['parameter'];
         return view('wigdet')
                 ->with('daerah',$daerah)
                 ->with('tmin',$tmin)
@@ -118,7 +118,7 @@ class HomeController extends Controller
 
     public function table_gempa_m5($daerah=null,$kota=null)
     {
-        $bmkg = new Bmkg; 
+        $bmkg = new Bmkg;
 
         $data = $bmkg->getGempaM5();
 

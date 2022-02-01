@@ -21,60 +21,77 @@
       </div>
       <div style="width:50%;float:left">
         <h1 class="location-and-date__location" style="font-size:20px;">
-          
-          <select name="nama_kota" onchange="ubah(this.value)" class="form-control" style="height:35px;padding:5px 10px;width:200px;">
+            {{ $kota }}
+          {{-- <select name="nama_kota" onchange="ubah(this.value)" class="form-control" style="height:35px;padding:5px 10px;width:200px;">
             @foreach ($alldaerah as $item)
                 @if($item == $kota)
                   <option value="{{ $kota }}" selected="selected">{{ $kota }}</option>
-                @else
-                  <option value="{{ $item }}">{{ $item }}</option>
                 @endif
             @endforeach
-          </select>
+          </select> --}}
         </h1>
       </div>
-      <div style="font-size:12px;">Last Update : {{ \App\Helpers\DateHelper::hari(date('D',strtotime($tgl))) }}, {{ date('d/m/Y',strtotime($tgl)) }} {{ $wkt }} WIB</div>
-        <div class="current-temperature">
-          <div class="current-temperature__icon-container">
-            <img src="{{ asset('svg') }}/mostly-sunny.svg" class="current-temperature__icon" alt="">
-          </div>
-          <div class="current-temperature__content-container">
-            <div class="current-temperature__value">{{ isset($suhu[key($suhu)]) ? $suhu[key($suhu)] : '-' }}&deg;</div>
-            <div class="current-temperature__summary">Mostly Sunny</div>
-          </div>
+    </div>
+    {{-- <div class="row" style="width:100%;float:left">
+        <div class="col-md-6" style="width:49%;float:left">
+            <div style="font-size:12px;">Last Update : {{ \App\Helpers\DateHelper::hari(date('D',strtotime($tgl))) }}, {{ date('d/m/Y',strtotime($tgl)) }} {{ $wkt }} WIB</div>
+                <div class="current-temperature">
+
+                    <div class="current-temperature__icon-container">
+                    <img src="{{ asset('svg') }}/mostly-sunny.svg" class="current-temperature__icon" alt="">
+                    </div>
+                    <div class="current-temperature__content-container">
+                    <div class="current-temperature__value">{{ isset($suhu[key($suhu)]) ? $suhu[key($suhu)] : '-' }}&deg;</div>
+                    <div class="current-temperature__summary">Mostly Sunny</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="width:48%;float:right;">
+                <div class="current-stats" style="padding-left:20px;margin-top:30px;width:100%">
+                    <div style="width:100% !important;">
+                        <div class="current-stats__value">{{ isset($tmax[key($tmax)]) ? $tmax[key($tmax)] : '' }}&deg;</div>
+                        <div class="current-stats__label">High</div>
+                        <div class="current-stats__value">{{ isset($tmin[key($tmin)]) ? $tmin[key($tmin)] : '' }}&deg;</div>
+                        <div class="current-stats__label">Low</div>
+                    </div>
+                    <div style="width:100% !important;">
+                        <div class="current-stats__value">7mph</div>
+                        <div class="current-stats__label">Wind</div>
+                        <div class="current-stats__value">0%</div>
+                        <div class="current-stats__label">Rain</div>
+                    </div>
+                    <div style="width:100% !important;">
+                        <div class="current-stats__value">05:27</div>
+                        <div class="current-stats__label">Sunrise</div>
+                        <div class="current-stats__value">20:57</div>
+                        <div class="current-stats__label">Sunset</div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-  </div>
+    </div> --}}
 
 
-  
 
-
-  <div class="current-stats">
-    <div>
-      <div class="current-stats__value">{{ isset($tmax[key($tmax)]) ? $tmax[key($tmax)] : '' }}&deg;</div>
-      <div class="current-stats__label">High</div>
-      <div class="current-stats__value">{{ isset($tmin[key($tmin)]) ? $tmin[key($tmin)] : '' }}&deg;</div>
-      <div class="current-stats__label">Low</div>
-    </div>
-    <div>
-      <div class="current-stats__value">7mph</div>
-      <div class="current-stats__label">Wind</div>
-      <div class="current-stats__value">0%</div>
-      <div class="current-stats__label">Rain</div>
-    </div>
-    <div>
-      <div class="current-stats__value">05:27</div>
-      <div class="current-stats__label">Sunrise</div>
-      <div class="current-stats__value">20:57</div>
-      <div class="current-stats__label">Sunset</div>
-    </div>
-  </div>
-
-  <div class="weather-by-hour">
-    <h2 class="weather-by-hour__heading">Today's weather</h2>
+  <div class="weather-by-hour" style="margin-top:100px;">
+    <h2 class="weather-by-hour__heading">Today's weather {{ date('D, j/m') }}</h2>
     <div class="weather-by-hour__container">
-      <div class="weather-by-hour__item">
+        @if (isset($data['data'][0]['parameter']))
+            @foreach ($data['data'][0]['parameter'] as $item)
+                @if ($item['id'] == 't')
+                    @foreach ($item['nilai'] as $nilai)
+                        @if (date('d-m-Y') == date('d-m-Y', strtotime($nilai['waktu'])))
+                            <div class="weather-by-hour__item">
+                                <div class="weather-by-hour__hour">{{ date('H:i:s', strtotime($nilai['waktu'])) }}</div>
+                                <img src="{{ asset('svg') }}/mostly-sunny.svg" alt="Mostly sunny">
+                                <div>{{ isset($nilai['value'][0]) ? $nilai['value'][0] : 0 }}&deg;</div>
+                            </div>
+                        @endif
+                    @endforeach
+                @endif
+            @endforeach
+        @endif
+      {{-- <div class="weather-by-hour__item">
         <div class="weather-by-hour__hour">3am</div>
         <img src="{{ asset('svg') }}/mostly-sunny.svg" alt="Mostly sunny">
         <div>14&deg;</div>
@@ -108,175 +125,44 @@
         <div class="weather-by-hour__hour">9pm</div>
         <img src="{{ asset('svg') }}/mostly-sunny.svg" alt="Mostly sunny">
         <div>18&deg;</div>
-      </div>
+      </div> --}}
     </div>
   </div>
 
 
   <div class="next-5-days">
-    <h2 class="next-5-days__heading">Next 5 days</h2>
+    <h2 class="next-5-days__heading">Next 2 days</h2>
     <div class="next-5-days__container">
 
-      <div class="next-5-days__row">
+        @if (isset($data['data'][0]['parameter']))
+            @foreach ($data['data'][0]['parameter'] as $item)
+                @if ($item['id'] == 't')
+                    @foreach ($item['nilai'] as $nilai)
+                        @if (date('d-m-Y') != date('d-m-Y', strtotime($nilai['waktu'])))
 
-        <div class="next-5-days__date">
-          Tue
-          <div class="next-5-days__label">30/7</div>
+                        @endif
+                    @endforeach
+                @endif
+            @endforeach
+        @endif
+
+    @for ($i = (date('d')+1); $i <= (date('d')+2); $i++)
+        <div class="next-5-days__row">
+
+            <div class="next-5-days__date">
+                {{ date('D', strtotime(date('Y').'-'.date('m').'-'.$i)) }}
+                <div class="next-5-days__label">{{ $i }}/{{ date('n') }}</div>
+            </div>
+            @foreach ($data['data'][0]['parameter'][1]['nilai'] as $item)
+                    @if ($i.'-'.date('m-Y') == date('j-m-Y', strtotime($item['waktu'])))
+                        <div class="next-5-days__low">
+                            {{ $item['value'][0] }}&deg;
+                            <div class="next-5-days__label">{{ date('H:i:s', strtotime($item['waktu'])) }}</div>
+                        </div>
+                    @endif
+            @endforeach
         </div>
-
-        <div class="next-5-days__low">
-          10&deg;
-          <div class="next-5-days__label">Low</div>
-        </div>
-
-        <div class="next-5-days__high">
-          21&deg;
-          <div class="next-5-days__label">High</div>
-        </div>
-
-        <div class="next-5-days__icon">
-          <img src="{{ asset('svg') }}/sunny.svg" alt="Sunny">
-        </div>
-
-        <div class="next-5-days__rain">
-          0%
-          <div class="next-5-days__label">Rain</div>
-        </div>
-
-        <div class="next-5-days__wind">
-          12mph
-          <div class="next-5-days__label">Wind</div>
-        </div>
-
-      </div>
-      <div class="next-5-days__row">
-
-        <div class="next-5-days__date">
-          Wed
-          <div class="next-5-days__label">31/7</div>
-        </div>
-
-        <div class="next-5-days__low">
-          9&deg;
-          <div class="next-5-days__label">Low</div>
-        </div>
-
-        <div class="next-5-days__high">
-          18&deg;
-          <div class="next-5-days__label">High</div>
-        </div>
-
-        <div class="next-5-days__icon">
-          <img src="{{ asset('svg') }}/mostly-sunny.svg" alt="Mostly sunny">
-        </div>
-
-        <div class="next-5-days__rain">
-          3%
-          <div class="next-5-days__label">Rain</div>
-        </div>
-
-        <div class="next-5-days__wind">
-          7mph
-          <div class="next-5-days__label">Wind</div>
-        </div>
-
-      </div>
-      <div class="next-5-days__row">
-
-        <div class="next-5-days__date">
-          Thur
-          <div class="next-5-days__label">1/8</div>
-        </div>
-
-        <div class="next-5-days__low">
-          7&deg;
-          <div class="next-5-days__label">Low</div>
-        </div>
-
-        <div class="next-5-days__high">
-          15&deg;
-          <div class="next-5-days__label">High</div>
-        </div>
-
-        <div class="next-5-days__icon">
-          <img src="{{ asset('svg') }}/mostly-sunny.svg" alt="Mostly sunny">
-        </div>
-
-        <div class="next-5-days__rain">
-          75%
-          <div class="next-5-days__label">Rain</div>
-        </div>
-
-        <div class="next-5-days__wind">
-          11mph
-          <div class="next-5-days__label">Wind</div>
-        </div>
-
-      </div>
-      <div class="next-5-days__row">
-
-        <div class="next-5-days__date">
-          Tue
-          <div class="next-5-days__label">2/8</div>
-        </div>
-
-        <div class="next-5-days__low">
-          12&deg;
-          <div class="next-5-days__label">Low</div>
-        </div>
-
-        <div class="next-5-days__high">
-          24&deg;
-          <div class="next-5-days__label">High</div>
-        </div>
-
-        <div class="next-5-days__icon">
-          <img src="{{ asset('svg') }}/sunny.svg" alt="Sunny">
-        </div>
-
-        <div class="next-5-days__rain">
-          2%
-          <div class="next-5-days__label">Rain</div>
-        </div>
-
-        <div class="next-5-days__wind">
-          8mph
-          <div class="next-5-days__label">Wind</div>
-        </div>
-
-      </div>
-      <div class="next-5-days__row">
-
-        <div class="next-5-days__date">
-          Tue
-          <div class="next-5-days__label">30/7</div>
-        </div>
-
-        <div class="next-5-days__low">
-          10&deg;
-          <div class="next-5-days__label">Low</div>
-        </div>
-
-        <div class="next-5-days__high">
-          21&deg;
-          <div class="next-5-days__label">High</div>
-        </div>
-
-        <div class="next-5-days__icon">
-          <img src="{{ asset('svg') }}/mostly-sunny.svg" alt="Mostly sunny">
-        </div>
-
-        <div class="next-5-days__rain">
-          0%
-          <div class="next-5-days__label">Rain</div>
-        </div>
-
-        <div class="next-5-days__wind">
-          12mph
-          <div class="next-5-days__label">Wind</div>
-        </div>
-
-      </div>
+    @endfor
 
     </div>
   </div>

@@ -42,7 +42,7 @@ class ApiController extends Controller
             return view('index-perkiraan')->with('items',$items);
         }
     }
-    
+
     public function gempa($jenis=null)
     {
         $bmkg = new Bmkg;
@@ -51,10 +51,10 @@ class ApiController extends Controller
         } else {
             $data = null;
         }
-        
+
         // presentasi data
         $geojson = null;
-        
+
         switch ($data) {
             case "m-5-terkini":
                 // Gempa M 5+ Terkini
@@ -72,5 +72,9 @@ class ApiController extends Controller
                 return view('index-gempa');
         }
         return $geojson;
+    }
+
+    public function sendDataSensor(Request $request){
+
     }
 }

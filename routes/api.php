@@ -19,4 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('send-datasensor','ApiController@sendDataSensor');
+Route::get('kirim-datasensor','ApiController@sendDataSensor');
 Route::get('list-datasensor','ApiController@listDataSensor');

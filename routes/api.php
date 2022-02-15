@@ -18,4 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('send-datasensor','ApiController@sendDataSensor');
+Route::post('send-datasensor','ApiController@sendDataSensor');
+Route::get('list-datasensor','ApiController@listDataSensor');

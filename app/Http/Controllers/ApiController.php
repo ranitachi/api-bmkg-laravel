@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use File;
 use Storage;
+use App\Sensor;
 use App\Helpers\Bmkg;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -76,5 +77,26 @@ class ApiController extends Controller
 
     public function sendDataSensor(Request $request){
 
+        $sensor = new Sensor;
+        $sensor->tanggal  = $request->date;
+        $sensor->waktu  = $request->time;
+        $sensor->tgl_datetime  = $request->date.' '.$request->time;
+        $sensor->humidity  = $request->humidity;
+        $sensor->ldr  = $request->ldr;
+        $sensor->pir  = $request->pir;
+        $sensor->temperature  = $request->temperature;
+        $sensor->voice  = $request->voice;
+        // $sensor->json_text  = $request->json_text;
+        $sensor->created_at  = date('Y-m-d H:i:s');
+        $sensor->updated_at  = date('Y-m-d H:i:s');
+        $sensor->save();
+
+        return $sensor;
+    }
+
+    public function listDataSensor(){
+
+        $sensor = Sensor::orderby('id','desc')->limit(10)->get();
+        return $sensor;
     }
 }

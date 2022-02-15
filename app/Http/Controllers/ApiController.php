@@ -86,7 +86,7 @@ class ApiController extends Controller
         $sensor->pir  = $request->pir;
         $sensor->temperature  = $request->temperature;
         $sensor->voice  = $request->voice;
-        // $sensor->json_text  = $request->json_text;
+        $sensor->json_text  = $request->json_text;
         $sensor->created_at  = date('Y-m-d H:i:s');
         $sensor->updated_at  = date('Y-m-d H:i:s');
         $sensor->save();
